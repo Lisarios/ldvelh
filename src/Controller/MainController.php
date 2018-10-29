@@ -24,21 +24,38 @@ class MainController extends AbstractController
 
         //dump(str_replace(array("\t"), '', $text));
 
-        $test = preg_split("/[\n]+/", str_replace(array("\t"), '', $text));
+        $formatedText = preg_split("/[\n]+/", str_replace(array("\t"), '', $text));
 
-        //dump($test);
+        //dump($formatedText);
 
-        $cpt = 1;
+        /*
+         * SPLITTING CHAPTERS
+         */
+        $nbrChapter = 1;
+        $fullChapters = array();
+        $buffer = '';
 
-        $pattern = "/^[0-9]+[\s]$/";
-        foreach ($test as $item) {
-            if (preg_match($pattern, $item, $matches)) {
-                if(trim($item) == $cpt) {
-                    dump('lol');
+        $pattern = "/^[0-9]+[\s]$/";    //commence par des chiffres et se terminant par un espace
+        foreach ($formatedText as $line) {
+            if (preg_match($pattern, $line, $matches)) {
+                if(trim($line) == $nbrChapter) {
+                    array_push($fullChapters, $buffer);
+                    $buffer = '';
+                    $nbrChapter ++;
                 }
-                //dump(trim($item));
             }
+            $buffer = $buffer ." " .$line;
+
         }
+        array_push($fullChapters, $buffer); //add last chapter
+
+
+        /*
+         * PARSING CHILDREN INSIDE CHAPTERS
+         */
+
+
+        dump($fullChapters);
 
         return $this->json([
             'message' => 'Welcome to your new controller!',
