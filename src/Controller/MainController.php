@@ -19,6 +19,8 @@ class MainController extends AbstractController
         $pdf = $PDFParser->parseFile($pdfFilePath);
         //$text = nl2br($pdf->getText());
         $text = $pdf->getText();
+        //dump($text);
+
         //echo str_replace(array("\t"), '', $text);
         //var_dump(str_replace(array("\t"), '', nl2br($pdf->getText())));
 
@@ -35,27 +37,49 @@ class MainController extends AbstractController
         $fullChapters = array();
         $buffer = '';
 
-        $pattern = "/^[0-9]+[\s]$/";    //commence par des chiffres et se terminant par un espace
+        $patternNumChapter = "/^[0-9]+[\s]$/";    //commence par des chiffres et se terminant par un espace
         foreach ($formatedText as $line) {
-            if (preg_match($pattern, $line, $matches)) {
+            if (preg_match($patternNumChapter, $line, $matches)) {
                 if(trim($line) == $nbrChapter) {
                     array_push($fullChapters, $buffer);
                     $buffer = '';
                     $nbrChapter ++;
                 }
             }
-            $buffer = $buffer ." " .$line;
+            $buffer = $buffer ." " .trim($line);
 
         }
         array_push($fullChapters, $buffer); //add last chapter
+        //dump($fullChapters);
 
 
         /*
          * PARSING CHILDREN INSIDE CHAPTERS
          */
+        foreach ($fullChapters as $chapter) {
+            dump($chapter);
+            $res = array();
+            //pattern numérique seulement
+            $patternChildChapter = "/[0-9]+/";
+            if(preg_match_all($patternChildChapter, $chapter, $matchedChildren)) {
+                //dump($matchedChildren);
+                if(count($matchedChildren) >= 2) {
+                    //dump($matchedChildren);
+                }
+            }
+            //pattern "au " + numérique
+            $patternChildChapter2 = "/au[\s][0-9]+/";
+            if(preg_match_all($patternChildChapter2, $chapter, $matchedChildren)) {
+                //dump($matchedChildren);
+                foreach ($matchedChildren[0] as $child) {
+                    $exploded = explode(' ', $child);
+                    array_push($res, $exploded[1]);
+                }
+            }
+            dump($res);
+        }
 
-
-        dump($fullChapters);
+        //dump($fullChapters);
 
         return $this->json([
             'message' => 'Welcome to your new controller!',
