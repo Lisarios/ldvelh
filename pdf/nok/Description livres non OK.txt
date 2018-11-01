@@ -1,0 +1,30 @@
+Description livres non OK
+Loup Solitaire 17 - Pedneault, Eric.pdf					pas de paragraphe "32"
+Loup Solitaire 28 - Beetlejuice.pdf						l'intro comporte plusieurs lignes commençant par des chiffres et plante le parsing des paragraphes
+
+3 - Pedneault, Eric.pdf									pas de paragraphe "189"
+3-Le Peuple Maudit - Region Languedoc Roussillon.pdf	"                    49 : "
+Astre d'Or 1-Le sorcier majdar - Beetlejuice.pdf		pas de paragraphe "75"
+Chroniques cretoises 1-La Venge - Pedneault, Eric.pdf	pas de paragraphe "185"
+DF65- Massacre a la Tronconneus - Inconnu(e).pdf		les pages sont doublées, le parsing est trop difficile
+1 - Beetlejuice.pdf										pas de paragraphe "321"
+
+Defis et sortileges 1-Caithness - Region Languedoc Roussillon.pdf	paragraphes dans le désordre
+Defis et sortileges 2-Keldrilh - Pedneault, Eric.pdf				paragrapĥes dans le désordre
+Defis et sortileges 3-Pereim le - Region Languedoc Roussillon.pdf	paragraphes dans le désordre
+Defis et sortileges 4 - Region Languedoc Roussillon.pdf				paragraphes dans le désordre
+Defis et sortileges 5 Region Languedoc Roussillon.pdf				paragraphes dans le désordre
+Defis et sortileges 6 Region Languedoc Roussillon.pdf				paragraphes dans le désordre
+Defis et sortileges 7 Region Languedoc Roussillon.pdf				paragraphes dans le désordre
+Defis et sortileges 8 Region Languedoc Roussillon.pdf				paragraphes dans le désordre
+
+Defis Fantastiques 13 - Alambix.pdf						pas de paragraphe "186", "111" à la place
+Defis Fantastiques 22 - Beetlejuice.pdf					pas de paragraphe "8"
+Defis Fantastiques 24 - Pedneault, Eric.pdf				pas de paragraphe "75"
+
+Quete du Graal 1 à 8									trop compliqué pour le moment
+
+SHERLOCK HOLMES 8 L HERITIER DI - Region Languedoc Roussillon.pdf	une énigme numérique empêche de trouver les numéros de paragraphe
+Sherlock Holmes - Miguel.pdf										un paragraphe 999 étrange (pas de rdv "au *num*")
+
+Métamorphose 1 et 2										compliqué car certaines redirections sont des textes et pas de num de paragraphes
