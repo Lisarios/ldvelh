@@ -28,13 +28,13 @@ class Chapter
     private $text;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Chapter", cascade={"persist", "remove"}, inversedBy="children", fetch="EAGER")
+     * @ORM\ManyToMany(targetEntity="Chapter", cascade={"persist", "remove"}, inversedBy="children", fetch="LAZY")
      * @ORM\JoinTable(name="pathing_chapters")
      */
     private $parents;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Chapter", mappedBy="parent", fetch="EAGER")
+     * @ORM\ManyToMany(targetEntity="Chapter", mappedBy="parents", fetch="LAZY")
      */
     private $children;
 

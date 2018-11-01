@@ -23,16 +23,10 @@ class MainController extends AbstractController
         $pdfFilePath = $this->getParameter('kernel.project_dir') ."/pdf/" .$f ."/" .$b;
 
         $formatedText = $this->pdfToFormatedText(new Parser(), $pdfFilePath);
-
-        /*
-         * SPLITTING CHAPTERS
-         */
+        
         $fullChapters = $this->chaptersSplitterFromFullFormatedText($formatedText);
         //dump($fullChapters);
 
-        /*
-         * PARSING CHILDREN INSIDE CHAPTERS
-         */
         foreach ($fullChapters as $chapter) {
             $keys = array_keys($fullChapters, $chapter);
             dump($chapter);
@@ -45,11 +39,21 @@ class MainController extends AbstractController
                 $em->flush();
             }
 
+            //dump($chapterRepository->findOneBy(array("numChapter" => $keys[0])));
+
+            //dump($childrenList);
+        }
+
+        foreach ($fullChapters as $chapter) {
+            $keys = array_keys($fullChapters, $chapter);
+            $childrenList = $this->parsingChildrenInsideChapter($chapter);
+            foreach($childrenList as $child) {
+                /** @var Chapter $chap */
+                $chap = $chapterRepository->findOneBy(array("numChapter" => $keys[0]));
+                $c = $chapterRepository->findOneBy(array("numChapter" => $child));
+                $chap->addChild($c);
+            }
             dump($chapterRepository->findOneBy(array("numChapter" => $keys[0])));
-
-            $res = $this->parsingChildrenInsideChapter($chapter);
-
-            //dump($res);
         }
 
         return $this->json([
@@ -160,7 +164,7 @@ class MainController extends AbstractController
 
             if ((preg_match($patternNumChapter3, $line, $matches) || (preg_match($patternNumChapter2, $line, $matches)))) {
                 if(trim($line) == $nbrChapter) {
-                    $patternText = "/^[\s][0-9]{1,2}[\s]/";
+                    $patternText = "/^[\s][0-9]{1,3}[\s]/";
                     $formattedText = preg_replace($patternText, "", $buffer);
                     array_push($fullChapters, $formattedText);
                     $buffer = '';
@@ -180,14 +184,7 @@ class MainController extends AbstractController
 
         //dump($chapter);     //affiche chapitre par chapitre
         $childrenArray = array();
-        //pattern numérique seulement
-        $patternChildChapter = "/[0-9]+/";
-        if(preg_match_all($patternChildChapter, $chapter, $matchedChildren)) {
-            //dump($matchedChildren);
-            if(count($matchedChildren) >= 2) {
-                //dump($matchedChildren);
-            }
-        }
+
         //pattern "au " + numérique
         $patternChildChapter2 = "/au[\s][0-9]+/";
         if(preg_match_all($patternChildChapter2, $chapter, $matchedChildren)) {
